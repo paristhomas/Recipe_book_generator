@@ -25,12 +25,25 @@ class Scraper:
                 self.url_list.append("https://www.bbcgoodfood.com/" + str(foo.get('href')))
             print(pagenum)
 
-    def run_scraper(self):
+    def url_scraper(self):
         self.scrape_urls()
         for url in self.url_list:
              foo = Recipe(URL=url, method="URL")
-             foo.url2self()
-             foo.save2mongo()
              print(foo.Name)
 
+    def metadata_scraper(self):
+        for url in self.url_list:
+            foo = Recipe(URL= url, method="DB")
+            foo.update_from_url()
+            print(foo.Name)
+            foo.updateMongoReciepe()
 
+
+    def urls_from_DB(self):
+        urls = Database.find(collection="recipeDB",
+                                      query={},
+                                      field={"URL": 1, "Name": 1, "_id": 0})
+        self.url_list = []
+        for url in urls:
+            self.url_list.append(url["URL"])
+        return  self.url_list

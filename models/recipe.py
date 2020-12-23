@@ -14,11 +14,12 @@ class Recipe:
         self.Effort = None
         self.Ingredients = None
         if method == "URL" and URL is not None:
-            self.url2self()
+            #self.url2self()
+            self.save2mongo()
         if method == "DB":
-            pass
+            self.fromMongo()
 
-    def url2self(self):
+    def update_from_url(self):
         #@@ this should be setup better
         response = requests.get(self.URL)
         content = response.content
@@ -39,27 +40,30 @@ class Recipe:
         TAG_NAME = "div"
         QUERY = "icon-with-text time-range-list cook-and-prep-time masthead__cook-and-prep-time"
         element = soup.find(TAG_NAME, QUERY)
-        subElement = element.find_all("time")
         dt = timedelta(0)
-        for subsubElement in subElement:
-            time = subsubElement.text
-            t = dateparser.parse("now") - dateparser.parse(time)
-            dt += t
+        try:
+            sub_Element = element.find_all("time")
+            for subsubElement in sub_Element:
+                time = subsubElement.text
+                t = dateparser.parse("now") - dateparser.parse(time)
+                dt += t
+        except: pass
         self.Cooktime = round(dt.seconds / 60, 0)
 
         # Effort
         TAG_NAME = "div"
         QUERY = "icon-with-text masthead__skill-level body-copy-small body-copy-bold icon-with-text--aligned"
         element = soup.find(TAG_NAME, QUERY)
-        self.Effort = element.text
+        try: self.Effort = element.text
+        except: self.Effort = None
 
         # Ingredients
         TAG_NAME = "section"
         QUERY = "recipe-template__ingredients col-12 mt-md col-lg-6"
         element = soup.find(TAG_NAME, QUERY)
-        subElement = element.find_all("li")
+        sub_Element = element.find_all("li")
         Ingredients = []
-        for subSubElement in subElement:
+        for subSubElement in sub_Element:
             Ingredients.append(subSubElement.text)
         self.Ingredients = Ingredients
         return
@@ -74,8 +78,16 @@ class Recipe:
                 }
 
     def save2mongo(self):
-        Database.insert(collection="recipes",
+        Database.insert(collection="recipeDB",
                         data=self.json())
+    def updateMongoReciepe(self):
+        Database.update_one(collection="recipeDB",
+                            query= {"URL": self.URL},
+                            data=self.json())
+        return self.json()
+    def fromMongo(self):
+        pass
+
 
 
 
