@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Your recipes</h2>
+    <a href="/"><button class="btn btn-primary">New post</button></a>
+    {% if posts|length > 0 %}
+        {% for recipe in your_book_data %}
+            <h3>{{ recipe.name }}</h3>
+            <p>{{ post.content }}</p>
+            <p>{{ post.author }}</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <h4>There aren't any posts yet!</h4>
+    {% endif %}
+</div>
+{% endblock %}

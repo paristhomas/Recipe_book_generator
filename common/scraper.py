@@ -22,7 +22,9 @@ class Scraper:
             subElement = element.find_all("h4")
             for subSubElement in subElement:
                 foo = subSubElement.find("a")
-                self.url_list.append("https://www.bbcgoodfood.com/" + str(foo.get('href')))
+                goo = str("https://www.bbcgoodfood.com" + str(foo.get('href')))
+                self.url_list.append(goo)
+                Recipe(URL=goo, method="URL")
             print(pagenum)
 
     def url_scraper(self):
@@ -34,16 +36,17 @@ class Scraper:
     def metadata_scraper(self):
         for url in self.url_list:
             foo = Recipe(URL= url, method="DB")
+            print(url)
             foo.update_from_url()
             print(foo.Name)
             foo.updateMongoReciepe()
 
 
     def urls_from_DB(self):
-        urls = Database.find(collection="recipeDB",
-                                      query={},
-                                      field={"URL": 1, "Name": 1, "_id": 0})
+        urls = Database.find(query={},
+                             field={"URL": 1, "Name": 1, "_id": 0})
         self.url_list = []
         for url in urls:
-            self.url_list.append(url["URL"])
+            if url["Name"] is None:
+                self.url_list.append(url["URL"])
         return  self.url_list

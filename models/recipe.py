@@ -14,8 +14,8 @@ class Recipe:
         self.Effort = None
         self.Ingredients = None
         if method == "URL" and URL is not None:
-            #self.url2self()
-            self.save2mongo()
+            if self.fromMongo() is None:
+                self.save2mongo()
         if method == "DB":
             self.fromMongo()
 
@@ -78,15 +78,13 @@ class Recipe:
                 }
 
     def save2mongo(self):
-        Database.insert(collection="recipeDB",
-                        data=self.json())
+        Database.insert(data=self.json())
     def updateMongoReciepe(self):
-        Database.update_one(collection="recipeDB",
-                            query= {"URL": self.URL},
+        Database.update_one(query= {"URL": self.URL},
                             data=self.json())
         return self.json()
     def fromMongo(self):
-        pass
+        return Database.find_one(query={"URL": self.URL})
 
 
 
