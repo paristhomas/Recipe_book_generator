@@ -15,12 +15,12 @@ def home():
         return render_template('home.html')
     else:
         ingredients = request.form['ingredients']
-        standard_ingredients = request.form['standard_ingredients']
-        your_book = Book.from_ingredients(ingredients,standard_ingredients)
-        return make_response(recipe_book(your_book))
+        #standard_ingredients = request.form['standard_ingredients']
+        your_book = Book.from_ingredients(ingredients=ingredients)
+        return make_response(recipe_book(your_book.recipes))
 
 
-@app.route('/recipe_book')
+@app.route('/recipe_book', methods=['POST', 'GET'])
 def recipe_book(your_book):
     return render_template('book.html', your_book=your_book)
 
@@ -29,6 +29,8 @@ def recipe_book(your_book):
 def initialize_database():
     Database.initialize()
 
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 """

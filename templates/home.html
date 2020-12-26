@@ -1,17 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <form id="new-post" action="/posts/new/{{ blog_id }}" method="post">
+    <form id="new-post" action="/" method="post">
         <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id="title" class="form-control" name="title">
+            <label for="ingredients">Ingredients (separate with comma) </label>
+            <textarea id="ingredients" class="form-control" name="ingredients"></textarea>
         </div>
-        <div class="form-group">
-            <label for="content">Content</label>
-            <textarea id="content" class="form-control" name="content"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-success">Publish</button>
+        <button type="submit" class="btn btn-success">Generate book</button>
     </form>
 </div>
 {% endblock %}

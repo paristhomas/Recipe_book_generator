@@ -1,3 +1,4 @@
+import uuid
 import requests
 import dateparser
 from datetime import timedelta
@@ -5,14 +6,16 @@ from bs4 import BeautifulSoup
 from common.database import Database
 
 
+
 class Recipe:
-    def __init__(self, URL=None, method="URL"):
+    def __init__(self, URL=None, _id=None, Name=None, Ratings=None, Cooktime=None, Effort=None, Ingredients=None, method="URL"):
+        self._id = uuid.uuid4().hex if _id is None else _id
         self.URL = URL
-        self.Name = None
-        self.Ratings = None
-        self.Cooktime = None
-        self.Effort = None
-        self.Ingredients = None
+        self.Name = Name
+        self.Ratings = Ratings
+        self.Cooktime = Cooktime
+        self.Effort = Effort
+        self.Ingredients = Ingredients
         if method == "URL" and URL is not None:
             if self.fromMongo() is None:
                 self.save2mongo()
@@ -83,9 +86,13 @@ class Recipe:
         Database.update_one(query= {"URL": self.URL},
                             data=self.json())
         return self.json()
+
     def fromMongo(self):
         return Database.find_one(query={"URL": self.URL})
 
-
+    @classmethod
+    def initilizeFromMongo(cls, url):
+        result = Database.find_one(query={"URL": url})
+        return cls(**result)
 
 
