@@ -29,6 +29,7 @@ def recipe_book(your_book):
 def initialize_database():
     Database.initialize()
 
+
 if __name__ == "__main__":
     app.run(debug=True)
 

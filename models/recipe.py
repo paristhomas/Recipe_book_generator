@@ -51,7 +51,7 @@ class Recipe:
                 t = dateparser.parse("now") - dateparser.parse(time)
                 dt += t
         except: pass
-        self.Cooktime = round(dt.seconds / 60, 0)
+        self.Cooktime = int(round(dt.seconds / 60, 0))
 
         # Effort
         TAG_NAME = "div"

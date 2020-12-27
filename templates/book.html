@@ -2,16 +2,15 @@
 {% block content %}
 <div class="container">
     <h2>Your recipes</h2>
-    <a href="/"><button class="btn btn-primary">New post</button></a>
+    <a href="/"><button class="btn btn-primary">New search</button></a>
     {% if your_book|length > 0 %}
         {% for recipe in your_book %}
-            <h3>{{ recipe.Name }}</h3>
-            <p>{{ recipe.URL }}</p>
-            <p>{{ recipe.Effort }}</p>
+            <h3><a href="{{ recipe.URL }}">{{ recipe.Name }}</a></h3>
+            <p>{{ recipe.Effort }}, Number of ratings: {{ recipe.Ratings }}, Cook time: {{ recipe.Cooktime }}mins</p>
             <hr>
         {% endfor %}
     {% else %}
-        <h4>There aren't any posts yet!</h4>
+        <h4>There aren't any recipes!</h4>
     {% endif %}
 </div>
 {% endblock %}

@@ -4,7 +4,7 @@ import pymongo
 class Database:
     URI = "mongodb://127.0.0.1:27017"
     DATABASE = None
-    global_collection = "T2"
+    global_collection = "test"
 
     @staticmethod
     def initialize():
@@ -26,3 +26,7 @@ class Database:
     @staticmethod
     def update_one(query, data, collection=global_collection):
         return Database.DATABASE[collection].update_one(query, {"$set": data})
+
+    @staticmethod
+    def aggregate(query, collection=global_collection):
+        return Database.DATABASE[collection].aggregate(query)
