@@ -6,3 +6,4 @@ uuid
 pymongo
 uwsgi
 gunicorn
+python-dotenv
