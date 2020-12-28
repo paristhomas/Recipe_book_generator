@@ -34,5 +34,5 @@ class Database:
 
     @staticmethod
     def create_index(index="Ingredients", collection=global_collection):
-        Database.DATABASE[collection].drop_index("Ingredients_text")
+        Database.DATABASE[collection].drop_index("text")
         return Database.DATABASE[collection].create_index([(index, pymongo.TEXT)], name='text')

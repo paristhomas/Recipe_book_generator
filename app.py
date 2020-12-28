@@ -11,12 +11,6 @@ def create_app():
     app = Flask(__name__)  # '__main__'
     app.secret_key = "paris"
 
-    """ScoutApm(app)
-    app.config["SCOUT_MONITOR"] = True
-    app.config["SCOUT_KEY"] = "wtwp536w8u9DzTlDTpiy"
-    app.config["SCOUT_NAME"] = "Recipe book generator"
-    """
-
     @app.route('/', methods=['POST', 'GET'])
     def home():
         if request.method == 'GET':
@@ -38,7 +32,7 @@ def create_app():
         Database.initialize()
 
     return app
-"""
+
 def run_scraping():
     Database.initialize()
     scrape1 = Scraper()
@@ -48,10 +42,10 @@ def run_scraping():
     Database.create_index()
 
 
-if __name__ == "__main__":
-    app.run(debug=False)
+run_scraping()
+create_app()
 
-"""
+
 
 
 
