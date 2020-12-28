@@ -41,7 +41,6 @@ class Scraper:
             print(foo.Name)
             foo.updateMongoReciepe()
 
-
     def urls_from_DB(self):
         urls = Database.find(query={},
                              field={"URL": 1, "Name": 1, "_id": 0})
@@ -49,4 +48,4 @@ class Scraper:
         for url in urls:
             if url["Name"] is None:
                 self.url_list.append(url["URL"])
-        return  self.url_list
+        return self.url_list

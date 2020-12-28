@@ -1,5 +1,5 @@
 from common.database import Database
-#from common.scraper import Scraper
+from common.scraper import Scraper
 from models.book import Book
 #from scout_apm.flask import ScoutApm
 from flask import Flask, render_template, request, session, make_response
@@ -29,21 +29,24 @@ def home():
 def recipe_book(your_book):
     return render_template('book.html', your_book=your_book)
 
-"""
+
 @app.before_first_request
 def initialize_database():
     Database.initialize()
-"""
+
+
+"""Database.initialize()
+scrape1 = Scraper()
+scrape1.scrape_urls()
+scrape1.urls_from_DB()
+scrape1.metadata_scraper()
+Database.create_index()"""
 
 if __name__ == "__main__":
     app.run(debug=False)
 
 
-"""
-scrape1 = Scraper()
-#scrape1.scrape_urls()
-scrape1.urls_from_DB()
-scrape1.metadata_scraper()
-"""
+
+
 
 

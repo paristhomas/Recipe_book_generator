@@ -2,9 +2,10 @@ import pymongo
 
 
 class Database:
-    URI = "mongodb://127.0.0.1:27017"
+    URI = "mongodb+srv://paris1:qpgw67JxtAsD7b2@cluster0.c2oks.mongodb.net/Cluster0?retryWrites=true&w=majority"#"mongodb://127.0.0.1:27017"
     DATABASE = None
     global_collection = "test"
+
 
     @staticmethod
     def initialize():
@@ -30,3 +31,8 @@ class Database:
     @staticmethod
     def aggregate(query, collection=global_collection):
         return Database.DATABASE[collection].aggregate(query)
+
+    @staticmethod
+    def create_index(index="Ingredients", collection=global_collection):
+        Database.DATABASE[collection].drop_index("Ingredients_text")
+        return Database.DATABASE[collection].create_index([(index, pymongo.TEXT)], name='text')
