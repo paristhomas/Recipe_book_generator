@@ -1,9 +1,5 @@
 flask
-beautifulsoup4
-requests
-dateparser
-uuid
 pymongo
+requests
+uuid
 uwsgi
-gunicorn
-python-dotenv
