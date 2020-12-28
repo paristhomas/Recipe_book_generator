@@ -10,10 +10,8 @@ requests = "*"
 dateparser = "*"
 uuid = "*"
 pymongo = "*"
-uwsgi = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
-
