@@ -35,12 +35,14 @@ def initialize_database():
     Database.initialize()
 
 
-"""Database.initialize()
-scrape1 = Scraper()
-scrape1.scrape_urls()
-scrape1.urls_from_DB()
-scrape1.metadata_scraper()
-Database.create_index()"""
+def run_scraping():
+    Database.initialize()
+    scrape1 = Scraper()
+    scrape1.scrape_urls()
+    scrape1.urls_from_DB()
+    scrape1.metadata_scraper()
+    Database.create_index()
+
 
 if __name__ == "__main__":
     app.run(debug=False)
