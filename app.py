@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, session, make_response
 from dotenv import load_dotenv
 
 scrape = False
-debug = False
+debug = True
 load_dotenv()
 
 
