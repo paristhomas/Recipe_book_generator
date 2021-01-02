@@ -3,10 +3,10 @@ from models.recipe import Recipe
 from bs4 import BeautifulSoup
 from common.database import Database
 
+
 class Scraper:
     def __init__(self):
         self.url_list = []
-    #https://www.bbcgoodfood.com/search/recipes/page/416/?sort=-date
 
     def scrape_urls(self):
         urlstart = "https://www.bbcgoodfood.com/search/recipes/page/"
@@ -30,8 +30,8 @@ class Scraper:
     def url_scraper(self):
         self.scrape_urls()
         for url in self.url_list:
-             foo = Recipe(URL=url, method="URL")
-             print(foo.Name)
+            foo = Recipe(URL=url, method="URL")
+            print(foo.Name)
 
     def metadata_scraper(self):
         for url in self.url_list:

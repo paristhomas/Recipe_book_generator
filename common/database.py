@@ -1,11 +1,12 @@
+import os
+
 import pymongo
 
 
 class Database:
-    URI = "mongodb+srv://paris1:qpgw67JxtAsD7b2@cluster0.c2oks.mongodb.net/Cluster0?retryWrites=true&w=majority"#"mongodb://127.0.0.1:27017"
+    URI = os.environ.get("MONGO_URI")
     DATABASE = None
     global_collection = "test"
-
 
     @staticmethod
     def initialize():
