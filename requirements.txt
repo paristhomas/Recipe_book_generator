@@ -1,8 +1,0 @@
-flask
-beautifulsoup4
-requests
-dateparser
-uuid
-pymongo[srv]
-gunicorn
-python-dotenv
