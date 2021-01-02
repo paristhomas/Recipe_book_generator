@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 from common.database import Database
 
 
-
 class Recipe:
     def __init__(self, URL=None, _id=None, Name=None, Ratings=None, Cooktime=None, Effort=None, Ingredients=None, method="URL"):
         self._id = uuid.uuid4().hex if _id is None else _id
@@ -50,7 +49,8 @@ class Recipe:
                 time = subsubElement.text
                 t = dateparser.parse("now") - dateparser.parse(time)
                 dt += t
-        except: pass
+        except:
+            print("No time found for " + self.Name)
         self.Cooktime = int(round(dt.seconds / 60, 0))
 
         # Effort
@@ -82,6 +82,7 @@ class Recipe:
 
     def save2mongo(self):
         Database.insert(data=self.json())
+
     def updateMongoReciepe(self):
         Database.update_one(query= {"URL": self.URL},
                             data=self.json())

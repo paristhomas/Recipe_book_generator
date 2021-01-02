@@ -1,11 +1,13 @@
 from common.database import Database
 from common.scraper import Scraper
 from models.book import Book
-#from scout_apm.flask import ScoutApm
 from flask import Flask, render_template, request, session, make_response
 from dotenv import load_dotenv
 
+scrape = False
+debug = False
 load_dotenv()
+
 
 def create_app():
     app = Flask(__name__)  # '__main__'
@@ -17,21 +19,18 @@ def create_app():
             return render_template('home.html')
         else:
             ingredients = request.form['ingredients']
-            #standard_ingredients = request.form['standard_ingredients']
             your_book = Book.from_ingredients(ingredients=ingredients)
             return make_response(recipe_book(your_book.recipes))
-
 
     @app.route('/recipe_book', methods=['POST', 'GET'])
     def recipe_book(your_book):
         return render_template('book.html', your_book=your_book)
 
-
     @app.before_first_request
     def initialize_database():
         Database.initialize()
-
     return app
+
 
 def run_scraping():
     Database.initialize()
@@ -42,10 +41,12 @@ def run_scraping():
     Database.create_index()
 
 
-run_scraping()
-create_app()
-
-
+if scrape:
+    run_scraping()
+if debug:
+    app1 = create_app()
+    if __name__ == '__main__':
+        app1.run(port=4995, debug=True)
 
 
 
